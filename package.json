@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@nuxtjs/moment": "^1.6.1"
+  }
+}
