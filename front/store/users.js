@@ -7,6 +7,7 @@ export const state = () => ({
     followerList: [],
     hasMoreFollowing  : true,
     hasMoreFollower : true  ,
+    failedMessage  : '',
 
 });
 // const totalFollowings = 6;
@@ -15,8 +16,17 @@ export const state = () => ({
 
 //보통 mutations 는 단순한 동기작업을 할때 사용한다
 export const mutations = {
+    setError(state,payload){
+        
+        console.log("에러 ㅋㅋ",payload.status =='403');
+        if(payload.status && payload.status =='403'){
+            state.failedMessage = payload.data.message; 
+        }
+    },
+
     setMe(state,payload) {
         state.me = payload;
+        state.failedMessage = '';
     },
     setOther(state,payload) {
         state.other = payload;
@@ -75,6 +85,8 @@ export const actions = {
         withCredentials: true,
         })
         .then((res)=>{
+            // if(res.status )
+
             commit('setMe',res.data);
             console.log(state);
         }).catch((err)=> {
@@ -102,21 +114,25 @@ export const actions = {
         console.log(payload);
 
         this.$axios.post('/user',{
-            email:payload.email,
+            userId:payload.userId,
             nickName : payload.nickName,
             password : payload.password
-        }) // REST api 
+        },{
+            withCredentials: true,
+            }) // REST api 
         .then((res)=>{
-            // console.log(data);
+            
             commit('setMe',res.data);
         }).catch((err)=> {
-            console.log(err);
+            
+            commit('setError',err.response);
+
         });
     },
     login({commit},payload){
         this.$axios.post('/user/login'
         ,{
-            email : payload.email,
+            userId : payload.userId,
             password : payload.password
         },{
            withCredentials  :true,

@@ -61,18 +61,18 @@ export default {
                 return {
                     title: `${this.post.User.nickName}의 게시글`,
                     meta :[{
-                    name:'description',content : this.post.content,
+                     name:'description',content : this.post.content,
                     }
                     ,{
-                    name : 'og:title' , content : `${this.post.User.nickName}의 게시글`,
+                    hid: 'ogtitle' , name : 'og:title' , content : `${this.post.User.nickName}의 게시글`,
                     }
                     ,{
-                    name : 'og:description' , content : this.post.contnet,
+                    hid: 'ogdesc' ,  name : 'og:description' , content : this.post.contnet,
                     }
                     ,{
-                    property : 'og:image' , content : this.post.Images[0] ? this.post.Images[0].src : 'http://vue.nodebird.com/vue-nodebird.png',
+                    hid: 'ogimage' , property : 'og:image' , content : this.post.Images[0] ? this.post.Images[0].src : 'http://vue.nodebird.com/vue-nodebird.png',
                     },{
-                    property : 'og:url' , content : `https://vue.nodebird.com/post/${this.post.id}`,
+                    hid: 'ogurl' ,  property : 'og:url' , content : `https://vue.nodebird.com/post/${this.post.id}`,
                     },
                     ]
                 }

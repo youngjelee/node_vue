@@ -5,11 +5,11 @@
             <v-form ref="form" v-model="valid" @submit.prevent="onSubmitLogin">
                 <v-container>
                     <v-text-field 
-                        label="이메일"
-                        type="email"
-                        v-model="email"
-                        :rules ="[v=> !!v||'이메일을 입력해주세요.',
-                        v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다']"
+                        label="userId"
+                        type="userId"
+                        v-model="userId"
+                        :rules ="[v=> !!v||'아이디를 입력해주세요.',
+                        v => /.+@.+/.test(v) || '아이디가 유효하지 않습니다']"
                         required />
                     <v-text-field 
                         label="비밀번호"
@@ -48,7 +48,7 @@ export default {
     data(){
         return {
             valid : false,
-            email: '',
+            userId: '',
             password :'',
 
 
@@ -59,7 +59,7 @@ export default {
             if(this.valid){
                     alert('로그인 시도');
                     this.$store.dispatch('users/login',{
-                        email: this.email,
+                        userId: this.userId,
                         password : this.password
                     });
 

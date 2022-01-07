@@ -6,10 +6,10 @@
                 <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
                     <v-container>
 
-                    <v-text-field label="이메일"
-                    type="email"
-                    v-model ="email"
-                    :rules="emailRules"
+                    <v-text-field label="아이디"
+                    type="userId"
+                    v-model ="userId"
+                    :rules="userIdRules"
                     required></v-text-field>
 
                     <v-text-field label="비밀번호"
@@ -46,14 +46,14 @@
         data() {
             return {
                 valid: false,
-                email : '',
+                userId : '',
                 password : '',
                 passwordChk :"",
                 nickName : '',
                 terms : false,
-                emailRules : [
-                    v => !!v || '이메일은 필수입니다.',
-                    v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다',
+                userIdRules : [
+                    v => !!v || '아이디는 필수입니다.',
+                    v => /.+@.+/.test(v) || '아이디가 유효하지 않습니다',
                 ],
                 nickNameRules : [
                     v=> !!v || '닉네임은 필수입니다.'
@@ -73,7 +73,10 @@
         computed : {
             me () {
                 return this.$store.state.users.me;
-            }
+            },
+            // failedMessage() {
+            //     return this.$store.state.users.failedMessage;
+            // }
         },
         head (){
             return {
@@ -85,18 +88,18 @@
                 if(this.$refs.form.validate()){
                     this.$store.dispatch('users/signUp',{
                         nickName : this.nickName,
-                        email : this.email,
+                        userId : this.userId,
                         password : this.password 
-                    }).then(()=> {
+                    }).then((res)=> {
+                        console.log("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",res.response);
                         this.$router.push({
                         path: '/',
 
                         });
                     }).catch(()=> {
-                        alert("회원가입 실패");
+                      alert(this.$store.state.users.failedMessage);
                     });
                     
-                    alert('회원가입 시도');
                 }else{
                     alert('폼이 유효하지않음');
                 }

@@ -21,24 +21,22 @@ router.post('/',isNotLoggedIn ,async (req,res,next)=> {
  
     try{
         const hash = await bcrypt.hash(req.body.password, 12);
-        
-        //////이메일로 중복가입 체크//
+      
         const exUser = await db.User.findOne({
             where:{
-
-                email : req.body.email,
+                userId : req.body.userId,
             },
         });
         if(exUser) {
             return res.status(403).json({
                 errorCode : 1,
-                message : "이미 회원가입되어있습니다."
+                message : "이미 등록된 아뒤입니다만...."
             })
         }
-        ///이메일 중복가입체크 끝 ////
+        ///userId 중복가입체크 끝 ////
 
         const newUser = await db.User.create({
-                email : req.body.email,
+                userId : req.body.userId,
                 nickName : req.body.nickName,
                 password : hash,
         });//HTTP STATUS CODE 
@@ -61,7 +59,7 @@ router.post('/',isNotLoggedIn ,async (req,res,next)=> {
                 }
                 const fullUser = await db.User.findOne({
                     where :{ id: user.id},
-                    attributes :['id' , 'nickName' ,'email'],
+                    attributes :['id' , 'nickName' ,'userId'],
                     include :[{
                         model : db.User,
                         as : 'Followings',
@@ -78,6 +76,8 @@ router.post('/',isNotLoggedIn ,async (req,res,next)=> {
                     }
                 ]
                 });
+                console.log("실행확인");
+                console.log(fullUser);
                 return res.json(fullUser);
             });
         })(req,res,next);
@@ -117,7 +117,7 @@ router.post('/login',isNotLoggedIn ,(req,res,next) => {
             }
             const fullUser = await db.User.findOne({
                 where :{ id: user.id},
-                attributes :['id' , 'nickName' ,'email'],
+                attributes :['id' , 'nickName' ,'userId'],
                 include :[{
                     model : db.User,
                     as : 'Followings',
@@ -270,7 +270,7 @@ router.get('/:id',async(req,res,next)=>{
 
         const fullUser = await db.User.findOne({
             where :{ id: parseInt(req.params.id,10)},
-            attributes :['id' , 'nickName' ,'email'],
+            attributes :['id' , 'nickName' ,'userId'],
             include :[{
                 model : db.User,
                 as : 'Followings',

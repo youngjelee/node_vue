@@ -5,7 +5,7 @@ const path = require('path'); //노드 기본모듈
 const db = require('../models');
 
 
-router.get('/:tag',async(req,res) => {     //GET /hashtag/
+router.get('/:tag',async(req,res) => {     //GET /hashtag/abc?lastId=111
     try{
         let where ={};
         if(parseInt(req.query.lastId,10)){

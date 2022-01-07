@@ -12,21 +12,20 @@ module.exports = {
           name:'description',content : '이제영 NodeBird SNS 만들기 연습'
         }
         ,{
-          name : 'og:title' , content : 'NodeBird',
+          hid: 'ogtitle' ,name : 'og:title' , content : 'NodeBird',
         }
         ,{
-          name : 'og:description' , content : 'NodeBird 만들기연습',
+          hid: 'ogdesc' , name : 'og:description' , content : 'NodeBird 만들기연습',
         }
         ,{
-          property : 'og:type' , content : 'website',
+          hid: 'ogtype' ,property : 'og:type' , content : 'website',
         }
         ,{
-          property : 'og:image' , content : 'https://vue.nodebird.com/vue-nodebird.png',
+          hid: 'ogimage' ,  property : 'og:image' , content : 'http://localhost:3080/vue-nodebird.png',
         },{
-          property : 'og:url' , content : 'https://vue.nodebird.com/',
-        },
-        
-      ]
+          hid: 'ogurl' , property : 'og:url' , content : 'https://vue.nodebird.com/',
+        }],
+      link : [{ rel:'shortcut icon', href : '/vue-nodebird.png'}]
     },
     modules: [
       '@nuxtjs/axios',
